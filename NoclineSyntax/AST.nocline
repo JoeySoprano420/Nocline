@@ -1,0 +1,31 @@
+# Abstract Syntax Tree Nodes
+
+define ASTNode:bundle
+    type:string
+    value:string
+    children:bundle
+    metadata:bundle
+
+define FrameNode:ASTNode
+    assign type = "frame"
+
+define LoopNode:ASTNode
+    assign type = "loop"
+    assign metadata = {
+        iterator: string,
+        range: range
+    }
+
+define TriggerNode:ASTNode
+    assign type = "trigger"
+    assign metadata = {
+        target: string,
+        args: bundle
+    }
+
+define PauseNode:ASTNode
+    assign type = "pause"
+    assign metadata = {
+        duration: int
+    }
+
