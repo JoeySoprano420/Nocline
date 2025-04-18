@@ -1,0 +1,20 @@
+define BytecodeInstruction:bundle
+    opcode:string
+    args:bundle
+
+define BytecodeVM:bundle
+    instructionPointer:int
+    instructions:bundle
+    stack:bundle
+    frameStack:bundle
+
+define executeNextInstruction():
+    frame:
+        assign instr = BytecodeVM.instructions[BytecodeVM.instructionPointer]
+        if instr.opcode == "TRIGGER":
+            trigger(instr.args[0], instr.args[1])
+        else if instr.opcode == "PAUSE":
+            pause instr.args[0]
+        else if instr.opcode == "ENTER_FRAME":
+            enterFrame(instr.args[0])
+        assign BytecodeVM.instructionPointer += 1
