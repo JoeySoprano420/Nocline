@@ -17,8 +17,6 @@ Modular scopes, frames, and emotive triggers designed for living, feeling system
 
 Whether you’re building a scent-based simulation, an interactive art game, or a neural scripting engine, Nocline gives you the keys to code in synesthetic signal waves, where emotion meets execution.
 
-REPL is served at http://127.0.0.1:8080 if using live-server.
-
 Example game.scene1.nc:
 
 nocline
