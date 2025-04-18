@@ -1,0 +1,25 @@
+define ScentPattern:bundle
+    emotion:string
+    intensity:float
+    phase:string
+
+define decodeScent(input:scent) -> ScentPattern:
+    frame:
+        if input == "musk-cyan:phase-alpha":
+            return {
+                emotion: "desire",
+                intensity: 0.82,
+                phase: "awakening"
+            }
+        else if input == "rose-ash:phase-beta":
+            return {
+                emotion: "regret",
+                intensity: 0.67,
+                phase: "dissolution"
+            }
+        else:
+            return {
+                emotion: "unknown",
+                intensity: 0.0,
+                phase: "null"
+            }
