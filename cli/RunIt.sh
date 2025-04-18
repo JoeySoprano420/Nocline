@@ -1,0 +1,1 @@
+nocline run file.nc
