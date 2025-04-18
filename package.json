@@ -1,0 +1,10 @@
+{
+  "name": "nocline-dev",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "start": "node cli/nocline.js repl",
+    "dev": "live-server frontend"
+  },
+  "dependencies": {}
+}
