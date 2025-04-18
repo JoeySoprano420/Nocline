@@ -1,0 +1,9 @@
+define REPL():
+    frame:
+        loop true:
+            assign userInput = input("> ", color="cyan")
+            if userInput == "exit":
+                break
+            assign ast = parse(userInput)
+            assign result = eval(ast)
+            print(result, color="lime")
