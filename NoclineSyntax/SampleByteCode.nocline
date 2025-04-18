@@ -1,0 +1,6 @@
+[
+    { opcode: "ENTER_FRAME", args: ["Main"] },
+    { opcode: "TRIGGER", args: ["initializeSensors", {}] },
+    { opcode: "PAUSE", args: [300] },
+    { opcode: "TRIGGER", args: ["lockTarget", {}] }
+]
