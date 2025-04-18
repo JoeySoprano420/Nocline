@@ -1,0 +1,10 @@
+define missionPhase():
+    frame:
+        assign targetZone = "Sector-7"
+        loop i in 0..3:
+            trigger pingZone(targetZone)
+            pause 100ms
+        if system::confirmed:
+            trigger lockTarget()
+        else:
+            trigger fallbackProtocol()
