@@ -1,0 +1,14 @@
+define SignalBus:bundle
+    signals:bundle
+
+define syncSignal(signalName:string):
+    frame:
+        while !SignalBus.signals[signalName].ready:
+            pause 10ms
+
+define trigger(name:string, args:bundle):
+    frame:
+        if exists(system::name):
+            invoke system::name(args)
+        else:
+            log "No such trigger: " + name
