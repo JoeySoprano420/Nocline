@@ -158,3 +158,22 @@ with zipfile.ZipFile(zip_path, 'w') as z:
         z.writestr(path, content)
 
 zip_path
+
+import zipfile
+import os
+
+# Define paths
+src_zip_path = "/mnt/data/nocline-dev-kit.zip"
+extract_dir = "/mnt/data/nocline-dev-kit"
+
+# Extract the ZIP file
+with zipfile.ZipFile(src_zip_path, 'r') as zip_ref:
+    zip_ref.extractall(extract_dir)
+
+# List extracted files and directories
+extracted_files = []
+for root, dirs, files in os.walk(extract_dir):
+    for file in files:
+        extracted_files.append(os.path.join(root, file))
+
+extracted_files[:20]  # Show a preview of the first few files
