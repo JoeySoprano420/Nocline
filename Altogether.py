@@ -177,3 +177,74 @@ for root, dirs, files in os.walk(extract_dir):
         extracted_files.append(os.path.join(root, file))
 
 extracted_files[:20]  # Show a preview of the first few files
+
+import shutil
+import os
+
+# Define the project directory structure for zipping
+project_root = "/mnt/data/nocline_devkit"
+zip_output_path = "/mnt/data/nocline_with_jit_and_game_engine.zip"
+
+# Create the required directory structure and sample files
+os.makedirs(f"{project_root}/frontend", exist_ok=True)
+os.makedirs(f"{project_root}/core", exist_ok=True)
+os.makedirs(f"{project_root}/cli", exist_ok=True)
+os.makedirs(f"{project_root}/game", exist_ok=True)
+
+# Create core JIT compiler
+with open(f"{project_root}/core/jit.js", "w") as f:
+    f.write("""// core/jit.js
+import { resolveFrame } from './runtime.js';
+
+export function compileToJIT(bytecode) {
+    let fnBody = `let frameStack = []; let pc = 0;\\n`;
+    fnBody += `while (pc < bytecode.length) {\\n`;
+    fnBody += `  switch (bytecode[pc]) {\\n`;
+
+    fnBody += `    case 0x01: /* trigger */\\n`;
+    fnBody += `      console.log("Triggering", bytecode[pc+1]);\\n`;
+    fnBody += `      pc += 2; break;\\n`;
+
+    fnBody += `    case 0x02: /* loop */\\n`;
+    fnBody += `      let count = bytecode[pc+1];\\n`;
+    fnBody += `      for (let i = 0; i < count; i++) { console.log("Loop", i); }\\n`;
+    fnBody += `      pc += 2; break;\\n`;
+
+    fnBody += `    case 0x03: /* pause */\\n`;
+    fnBody += `      console.log("Pausing..."); pc += 1; break;\\n`;
+
+    fnBody += `    default:\\n`;
+    fnBody += `      throw new Error("Unknown opcode " + bytecode[pc]);\\n`;
+
+    fnBody += `  }\\n}\\n`;
+
+    return new Function("bytecode", fnBody);
+}
+""")
+
+# Game engine file
+with open(f"{project_root}/game/engine.js", "w") as f:
+    f.write("""// game/engine.js
+import { compileToJIT } from '../core/jit.js';
+import { parseNocline, compileBytecode } from '../core/bytecode.js';
+
+export function runGameScript(noclineCode) {
+    const ast = parseNocline(noclineCode);
+    const bytecode = compileBytecode(ast);
+    const run = compileToJIT(bytecode);
+    run(bytecode);
+}
+""")
+
+# Create a placeholder Nocline script
+with open(f"{project_root}/game/scene1.nc", "w") as f:
+    f.write("""frame:
+    loop 3:
+        trigger "moodShift"
+        pause
+""")
+
+# Zip the entire project directory
+shutil.make_archive(zip_output_path.replace(".zip", ""), 'zip', project_root)
+
+zip_output_path
