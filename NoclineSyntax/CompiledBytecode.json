@@ -1,0 +1,14 @@
+[
+  { "opcode": "ENTER_FRAME", "args": ["missionPhase"] },
+  { "opcode": "ASSIGN", "args": ["targetZone", "Sector-7"] },
+  { "opcode": "LOOP_START", "args": ["i", 0, 3] },
+  { "opcode": "TRIGGER", "args": ["pingZone", ["targetZone"]] },
+  { "opcode": "PAUSE", "args": [100] },
+  { "opcode": "LOOP_END", "args": [] },
+  { "opcode": "IF", "args": ["system::confirmed"] },
+  { "opcode": "TRIGGER", "args": ["lockTarget", []] },
+  { "opcode": "ELSE", "args": [] },
+  { "opcode": "TRIGGER", "args": ["fallbackProtocol", []] },
+  { "opcode": "END_IF", "args": [] },
+  { "opcode": "EXIT_FRAME", "args": [] }
+]
