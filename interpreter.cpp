@@ -1,3 +1,13 @@
+#include <iostream>
+#include "parser.hpp"
+extern int yyparse();
+
+int main() {
+    std::cout << "Nocline Drift Protocol Executor — v1.8 Alpha\n";
+    yyparse();
+    return 0;
+}
+
 // interpreter.hpp
 class Interpreter {
 public:
