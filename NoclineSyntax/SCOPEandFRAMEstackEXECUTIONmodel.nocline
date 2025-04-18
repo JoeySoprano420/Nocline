@@ -1,0 +1,20 @@
+define ScopeStack:bundle
+    frames:bundle
+    currentFrame:int
+
+define enterFrame(frameName:string):
+    frame:
+        action push(ScopeStack.frames, frameName)
+        assign ScopeStack.currentFrame = size(ScopeStack.frames) - 1
+
+define exitFrame():
+    frame:
+        action pop(ScopeStack.frames)
+        assign ScopeStack.currentFrame -= 1
+
+define resolveVar(name:string) -> value:
+    frame:
+        loop i in size(ScopeStack.frames)-1..0:
+            if ScopeStack.frames[i].has(name):
+                return ScopeStack.frames[i][name]
+        return null
